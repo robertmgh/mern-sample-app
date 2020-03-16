@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import Home from '../home/Home';
 import ListView from '../listView/ListView';
 import CreateView from '../createView/CreateView';
 
