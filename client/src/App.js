@@ -17,9 +17,9 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import InboxIcon from '@material-ui/icons/Inbox';
-import MailIcon from '@material-ui/icons/Mail';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AppRouter from './appRouter/AppRouter';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -111,7 +111,7 @@ function App() {
                     <div className={classes.toolbar} />
                     <Divider />
                     <List>
-                        <ListItem button>
+                        <ListItem button component={Link} to="/">
                             <ListItemIcon>
                                 <InboxIcon />
                             </ListItemIcon>

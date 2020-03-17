@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, TextField, Button, Backdrop, CircularProgress, Snackbar, Slide } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-const CreateView = () => {
+const UpsertView = props => {
     const [data, setdata] = useState({ name: '', surname: '', age: '' });
-    const [saving, setsaving] = useState({});
+    const [processing, setprocessing] = useState({});
+
+    useEffect(() => {
+        if (props.match.params && props.match.params.id) {
+            loadData(props.match.params.id);
+        }
+    }, []);
+
+    const loadData = id => {
+        setprocessing({ pending: true });
+
+        axios.get(`api/user/${id}`).then(
+            resp => {
+                setdata(resp.data);
+                setprocessing({ pending: false });
+            },
+            err => setprocessing({ pending: false, error: err, errorMessage: 'Error load user!' })
+        );
+    };
 
     const handleSave = () => {
-        setsaving({ pending: true });
-        
-        axios.post('/create', data).then(
-            () => setsaving({ pending: false, success: true }),
-            err => setsaving({ pending: false, error: err })
+        setprocessing({ pending: true });
+
+        axios.post('api/user', data).then(
+            () => setprocessing({ pending: false, saved: true }),
+            err => setprocessing({ pending: false, error: err, errorMessage: 'Error save user!' })
         );
     };
 
@@ -24,10 +42,10 @@ const CreateView = () => {
     };
 
     const handleSnackbarClose = () => {
-        setsaving({});
+        setprocessing({});
     };
 
-    if (data.success) {
+    if (data.saved) {
         return <Redirect to="/" />;
     } else
         return (
@@ -44,12 +62,12 @@ const CreateView = () => {
                 <Button onClick={handleSave} style={{ height: 35, marginTop: 10 }} variant="contained" color="secondary">
                     Save
                 </Button>
-                <Backdrop style={{ zIndex: 10000 }} open={saving.pending}>
+                <Backdrop style={{ zIndex: 10000 }} open={!!processing.pending}>
                     <CircularProgress color="inherit" />
                 </Backdrop>
                 <Snackbar
-                    open={!!saving.error}
-                    message="Error create user!"
+                    open={!!processing.error}
+                    message={processing.errorMessage}
                     autoHideDuration={6000}
                     onClose={handleSnackbarClose}
                     TransitionComponent={props => <Slide {...props} direction="up" />}
@@ -58,4 +76,4 @@ const CreateView = () => {
         );
 };
 
-export default CreateView;
+export default UpsertView;

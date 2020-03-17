@@ -9,6 +9,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from '@material-ui/core/Avatar';
 import { Button, Grid } from '@material-ui/core';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -21,9 +22,14 @@ const useStyles = makeStyles(theme => ({
 export default function CheckboxListSecondary() {
     const classes = useStyles();
     const [checked, setChecked] = React.useState([]);
-    const [data, setdata] = React.useState([]);
+    const [data, setdata] = React.useState([{ name: 'Rober', surname: 'Kowalski', age: 33, _id: 1234 }]);
 
-    React.useEffect(() => {}, []);
+    React.useEffect(() => {
+        axios.get('api/user').then(
+            resp => setdata(resp.data),
+            err => {}
+        );
+    }, []);
 
     const handleToggle = value => () => {
         const currentIndex = checked.indexOf(value);
@@ -42,7 +48,7 @@ export default function CheckboxListSecondary() {
         <Grid container direction="column" spacing={5}>
             <Grid item>
                 <List dense className={classes.root}>
-                    {[{ name: 'Rober', surname: 'Kowalski', age: 33, _id: 1 }].map(row => {
+                    {data.map(row => {
                         const labelId = `checkbox-list-secondary-label-${row._id}`;
                         return (
                             <ListItem key={row._id} button>
@@ -70,7 +76,13 @@ export default function CheckboxListSecondary() {
                     </Button>
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" color="secondary" disabled={checked.length < 1}>
+                    <Button
+                        component={Link}
+                        variant="contained"
+                        color="secondary"
+                        to={checked.length > 0 ? '/edit/' + checked[0] : '#'}
+                        disabled={checked.length < 1}
+                    >
                         Edit
                     </Button>
                 </Grid>
