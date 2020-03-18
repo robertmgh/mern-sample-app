@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 const UpsertView = props => {
-    const [data, setdata] = useState({ name: '', surname: '', age: '' });
+    const [data, setdata] = useState({ _id: '', name: '', surname: '', age: '' });
     const [processing, setprocessing] = useState({});
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const UpsertView = props => {
 
         axios.get(`api/user/${id}`).then(
             resp => {
-                setdata(resp.data);
+                setdata(resp.data.data);
                 setprocessing({ pending: false });
             },
             err => setprocessing({ pending: false, error: err, errorMessage: 'Error load user!' })
@@ -51,13 +51,13 @@ const UpsertView = props => {
         return (
             <Grid container spacing={5}>
                 <Grid item>
-                    <TextField onChange={handleChange} value={data.name} label="Name" />
+                    <TextField onChange={e => handleChange(e)} value={data.name} name="name" label="Name" />
                 </Grid>
                 <Grid item>
-                    <TextField onChange={handleChange} value={data.surname} label="Surname" />
+                    <TextField onChange={e => handleChange(e)} value={data.surname} name="surname" label="Surname" />
                 </Grid>
                 <Grid item>
-                    <TextField onChange={handleChange} value={data.age} label="Age" />
+                    <TextField onChange={e => handleChange(e)} value={data.age} name="age" label="Age" />
                 </Grid>
                 <Button onClick={handleSave} style={{ height: 35, marginTop: 10 }} variant="contained" color="secondary">
                     Save

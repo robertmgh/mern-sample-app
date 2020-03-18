@@ -42,7 +42,7 @@ updateUser = async (req, res) => {
         });
     }
 
-    User.findOne({ _id: req.params.id }, (err, user) => {
+    User.findOne({ _id: body._id }, (err, user) => {
         if (err) {
             return res.status(404).json({
                 err
