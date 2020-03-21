@@ -71,7 +71,7 @@ export default function CheckboxListSecondary() {
             </Grid>
             <Grid item container spacing={5}>
                 <Grid item>
-                    <Button component={Link} variant="contained" color="secondary" to="/create">
+                    <Button component={Link} variant="contained" color="secondary" to="/create" disabled={checked.length > 0}>
                         Create
                     </Button>
                 </Grid>
@@ -87,7 +87,13 @@ export default function CheckboxListSecondary() {
                     </Button>
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" color="secondary" disabled={checked.length < 1}>
+                    <Button
+                        component={Link}
+                        variant="contained"
+                        color="secondary"
+                        to={checked.length > 0 ? '/delete/' + checked[0] : '#'}
+                        disabled={checked.length < 1}
+                    >
                         Delete
                     </Button>
                 </Grid>

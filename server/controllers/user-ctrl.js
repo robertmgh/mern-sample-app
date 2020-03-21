@@ -3,7 +3,7 @@ const User = require('../models/user-model');
 createUser = (req, res) => {
     const body = req.body;
 
-    if (!body || Object.keys(body).length < 1) {
+    if (!body || Object.keys(body).length < 3) {
         return res.status(400).json({
             success: false,
             error: 'You must provide a user'
