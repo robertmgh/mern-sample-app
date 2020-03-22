@@ -9,7 +9,7 @@ const userRouter = require('./routes/user-router');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/../client/build', { index: ['index.html'] }));
+app.use(express.static(__dirname + '/clientBuild', { index: ['index.html'] }));
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
