@@ -1,6 +1,7 @@
 # mern-sample-app
 
 Sample app with Mongo Express React Node
++ Docker
 
 Just go to client and run -> npm run build
 next
