@@ -5,15 +5,17 @@ const app = express();
 const apiPort = 8081;
 const db = require('./db');
 const userRouter = require('./routes/user-router');
+const { isAuth, attachUserData } = require('./services/auth-service');
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/../client/build', { index: ['index.html'] }));
+//app.use(express.static(__dirname + '/../client/build', { index: ['index.html'] }));
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.get('/', (req, res) => {
+app.get('/', isAuth, attachUserData, (req, res) => {
     res.send('Hello World!');
 });
 

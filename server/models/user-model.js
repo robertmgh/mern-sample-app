@@ -5,7 +5,9 @@ const User = new Schema(
     {
         name: { type: String, require: true },
         surname: { type: String, require: true },
-        age: { type: Number, require: true }
+        age: { type: Number, require: true },
+        email: { type: String, require: false },
+        password: { type: String, require: false }
     },
     { timestamps: true }
 );
