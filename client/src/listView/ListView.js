@@ -27,7 +27,7 @@ export default function CheckboxListSecondary() {
     React.useEffect(() => {
         axios.get('api/user').then(
             resp => setdata(resp.data.data),
-            err => {}
+            () => {}
         );
     }, []);
 
