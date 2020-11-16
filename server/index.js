@@ -17,8 +17,8 @@ app.use(passport.session());
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-const CLIENT_ID = '62407329557-c24murno5qkfctaadsf47d8kd3badagh.apps.googleusercontent.com';
-const CLIENT_SECRET = 'ztyTlg-pCXE25-TjHXkzdmNH';
+const CLIENT_ID = '';
+const CLIENT_SECRET = '';
 
 passport.use(
     'provider',
